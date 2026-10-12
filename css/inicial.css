@@ -1,6 +1,6 @@
 .inicial {
   background-color: #f5dadf;
-  width: 100%;
+  width: 100vw;
   margin-left: calc(50% - 50vw);
   box-sizing: border-box;
   padding: 60px 20px;
