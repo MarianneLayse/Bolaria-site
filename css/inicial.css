@@ -1,9 +1,9 @@
 .inicial {
   background-color: #f5dadf;
-  width: 100vw;
+  width: 100%;
   margin-left: calc(50% - 50vw);
   box-sizing: border-box;
-  padding: 60px 32px;
+  padding: 60px 20px;
 }
 
 .titulo h1 {
@@ -33,4 +33,61 @@
   color: #e91e8c;
   border-radius: 10px;
   font-size: 30px;
+}
+
+.paragrafo h3 {
+  font-family: "Playfair Display", serif;
+  color: #5b1632;
+  font-weight: 100%;
+  font-size: 15px;
+  margin-top: 20px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 20px;
+  display: inline-block;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.paragrafo a {
+  display: block;
+  width: 220px;
+  margin-top: 24px;
+  background-color: #e91e8c;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 14px 16px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+.avaliacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
+.avaliacao span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 35px;
+}
+
+.avaliacao strong {
+  font-size: 32px;
+  color: #e91e8c;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.avaliacao small {
+  font-size: 14px;
+  color: #9b6b80;
+  margin-top: 5px;
 }
