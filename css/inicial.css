@@ -1,0 +1,36 @@
+.inicial {
+  background-color: #f5dadf;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  box-sizing: border-box;
+  padding: 60px 32px;
+}
+
+.titulo h1 {
+  font-family: "Playfair Display", serif;
+  color: #5b1632;
+  font-weight: 700;
+  font-size: 40px;
+  margin: 0;
+}
+
+.titulo span {
+  font-family: "Parisienne", cursive;
+  color: #ff4aa2;
+}
+
+.paragrafo p {
+  font-family: "Poppins", sans-serif;
+  color: #5b1632;
+  font-size: 20px;
+  line-height: 1.5;
+  margin-top: 20px;
+}
+
+.paragrafo p span {
+  font-family: "Parisienne", cursive;
+  background-color: #ffd1dc;
+  color: #e91e8c;
+  border-radius: 10px;
+  font-size: 30px;
+}

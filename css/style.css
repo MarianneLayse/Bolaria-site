@@ -1,2 +1,6 @@
 @import url("header.css");
 @import url("inicial.css");
+
+body {
+  margin: 0;
+}
