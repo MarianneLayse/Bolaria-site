@@ -106,3 +106,63 @@ input[type="checkbox"]:checked ~ nav {
   border-radius: 999px;
   box-sizing: border-box;
 }
+
+@media screen and (min-width: 1024px) {
+  .site-header {
+    padding: 18px 32px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(155, 107, 128, 0.12);
+    gap: 20px;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-text strong {
+    font-size: 20px;
+  }
+
+  .brand-text small {
+    font-size: 11px;
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: static;
+    width: auto;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .main-nav ul {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-right: 22px;
+  }
+
+  .main-nav ul a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4d2a39;
+  }
+
+  .btn-order {
+    margin-top: 0;
+    padding: 12px 22px;
+    min-width: 170px;
+    font-size: 14px;
+    white-space: nowrap;
+    box-shadow: 0 10px 22px rgba(233, 30, 140, 0.18);
+  }
+}
