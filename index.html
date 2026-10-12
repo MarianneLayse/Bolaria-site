@@ -4,34 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
-  </head>
     <title>Bolaria da Micka</title>
   </head>
   <body>
     <header class="site-header">
-        <a class="brand" href="index.html" title="Voltar para a página inicial">
-            <img class="logo" src="img/logo_bolaria.png" alt="Logo da Bolaria da Micka" />
+      <a class="brand" href="index.html" title="Voltar para a página inicial">
+        <span class="logo-circle">
+          <img
+            class="logo"
+            src="img/logo-bolaria.png"
+            alt="Logo da Bolaria da Micka"
+          />
+        </span>
+        <span class="brand-text">
+          <strong>Bolaria da Micka</strong>
+          <small>Bolos caseiros artesanais</small>
+        </span>
+      </a>
+
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden />
+      <label for="menu-toggle" class="menu-button" aria-label="Abrir menu">
+        <img src="img/menu.png" alt="menu" />
+      </label>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#cardapio">Cardápio</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+        <a
+          class="btn-order"
+          href="https://wa.me/5586999436390"
+          target="_blank"
+          rel="noopener"
+        >
+          Fazer pedido pelo WhatsApp
         </a>
-
-        <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden />
-        <label for="menu-toggle" class="menu-button" aria-label="Abrir menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-
-        <nav class="main-nav">
-            <ul>
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#cardapio">Cardápio</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-        </nav>
-
-        <a class="btn-order" href="https://wa.me/5586999436390" target="_blank" rel="noopener">
-        Fazer pedido pelo WhatsApp
-        </a>
+      </nav>
     </header>
   </body>
 </html>
