@@ -1,0 +1,33 @@
+.cardapio {
+  background-color: #f5dadf;
+}
+
+.titulo-cardapio {
+  text-align: center;
+  justify-content: center;
+}
+
+.titulo-cardapio h4 {
+  color: #c11c84;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+
+.titulo-cardapio h1 {
+  font-family: "Parisienne", cursive;
+  color: #ff4aa2;
+  font-size: 60px;
+  margin-top: 20px;
+}
+
+.titulo-cardapio p {
+  font-family: "Poppins", sans-serif;
+  color: #5b1632;
+  width: 100%;
+  margin: 10px auto;
+  max-width: 90%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  text-align: center;
+  word-wrap: break-word;
+}
