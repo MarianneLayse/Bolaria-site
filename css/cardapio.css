@@ -1,13 +1,21 @@
 .cardapio {
   background-color: #f5dadf;
+  width: 100vw;
+  margin: 0;
+  margin-left: calc(50% - 50vw);
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .titulo-cardapio {
+  margin: 0;
+  padding: 12px 0 0;
   text-align: center;
   justify-content: center;
 }
 
 .titulo-cardapio h4 {
+  margin: 0;
   color: #c11c84;
   font-family: "Poppins", sans-serif;
   font-size: 15px;
@@ -17,7 +25,7 @@
   font-family: "Parisienne", cursive;
   color: #ff4aa2;
   font-size: 60px;
-  margin-top: 20px;
+  margin: 8px 0 0;
 }
 
 .titulo-cardapio p {
@@ -30,4 +38,91 @@
   box-sizing: border-box;
   text-align: center;
   word-wrap: break-word;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.nav li {
+  margin: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #7a2145;
+  font-weight: bold;
+  padding: 8px 15px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.nav a:hover {
+  background: #ff2d8d;
+  color: white;
+}
+
+.nav a.ativo {
+  background: #ff2d8d;
+  color: white;
+}
+
+.cardapio {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+}
+
+.card-bolo {
+  min-width: 300px;
+  max-width: 300px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.card-bolo img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.tag {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #ff2d8d;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.conteudo-card {
+  padding: 20px;
+}
+
+.btn-encomendar {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px solid #ff2d8d;
+  border-radius: 25px;
+  text-decoration: none;
+  color: #ff2d8d;
+}
+
+.btn-encomendar:hover {
+  background: #ff2d8d;
+  color: white;
 }
