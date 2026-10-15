@@ -72,17 +72,26 @@
   color: white;
 }
 
-.cardapio {
+.lista-cardapio {
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-  padding: 20px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 16px;
+  padding: 20px 20px 40px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.lista-cardapio::-webkit-scrollbar {
+  display: none;
 }
 
 .card-bolo {
-  min-width: 300px;
+  flex: 0 0 80%;
   max-width: 300px;
-  flex-shrink: 0;
+  scroll-snap-align: center;
   background: white;
   border-radius: 20px;
   overflow: hidden;
