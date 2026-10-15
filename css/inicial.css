@@ -1,9 +1,9 @@
 .inicial {
   background-color: #ffd1dc;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: 100%;
+  margin: 0;
   box-sizing: border-box;
-  padding: 60px 20px;
+  padding: 24px 20px;
 }
 
 .titulo h1 {
@@ -38,15 +38,13 @@
 .paragrafo h3 {
   font-family: "Playfair Display", serif;
   color: #5b1632;
-  font-weight: 100%;
+  font-weight: 400;
   font-size: 15px;
-  margin-top: 20px;
+  margin: 10px 8px 0 0;
   background-color: white;
-  padding: 5px;
+  padding: 6px 12px;
   border-radius: 20px;
   display: inline-block;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .paragrafo a {
