@@ -40,13 +40,13 @@
 
 .nav ul {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin: 16px 0 8px;
   padding: 4px 20px 8px;
   list-style: none;
-  overflow-x: auto;
-  scrollbar-width: none;
+  overflow-x: visible;
 }
 
 .nav ul::-webkit-scrollbar {
@@ -187,28 +187,35 @@
 }
 
 @media screen and (min-width: 768px) {
-  .dica {
-    display: none;
-  }
-
-  .categoria {
-    width: 90%;
-    margin: 24px auto 40px;
-  }
-
-  .nav ul {
-    justify-content: center;
-  }
-
   .lista-cardapio {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 30px;
-    overflow-x: visible;
-    scroll-snap-type: none;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: #ff2d8d transparent;
+  }
+
+  .lista-cardapio::-webkit-scrollbar {
+    display: block;
+    height: 8px;
+  }
+
+  .lista-cardapio::-webkit-scrollbar-thumb {
+    background: #ff2d8d;
+    border-radius: 999px;
+  }
+
+  .lista-cardapio::-webkit-scrollbar-track {
+    background: transparent;
   }
 
   .card-bolo {
-    flex: 0 1 300px;
+    flex: 0 0 300px;
+  }
+
+  .dica {
+    display: block;
   }
 }
