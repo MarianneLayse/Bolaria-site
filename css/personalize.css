@@ -1,0 +1,22 @@
+.personalize {
+  background-color: #fdcae1;
+  width: 100%;
+}
+
+.titulo-personalize {
+  margin: 0;
+  padding: 12px 0 0;
+  text-align: center;
+  justify-content: center;
+  color: #7a3550;
+  font-size: 18px;
+}
+
+.titulo-personalize p {
+  margin: 0 auto;
+  color: #4d2a39;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  width: 90%;
+  text-align: center;
+}
