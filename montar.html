@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monte o seu | Bolaria da Micka</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/montar.css" />
+  </head>
+  <body>
+    <header class="topo">
+      <button type="button" id="topo-voltar" class="topo-voltar">
+        ← Voltar
+      </button>
+      <div class="marca">
+        <span class="emoji" id="emoji-tipo">🎂</span>
+        <div>
+          <strong id="titulo-tipo">Monte seu Bolo</strong>
+          <small>Bolaria da Micka</small>
+        </div>
+      </div>
+      <span class="contador" id="contador">1/4</span>
+    </header>
+
+    <main class="app">
+      <ol class="passos" id="passos"></ol>
+      <div id="tela"></div>
+
+      <div class="acoes">
+        <button type="button" id="voltar" class="btn sec">← Voltar</button>
+        <button type="button" id="prox" class="btn prim">Próximo ›</button>
+      </div>
+      <p class="rodape" id="rodape"></p>
+    </main>
+
+    <script src="js/montar.js"></script>
+  </body>
+</html>
