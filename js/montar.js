@@ -135,7 +135,7 @@ const TIPOS = {
   cupcake: unitario("Cupcake", "seu", "🧁", 6, {
     titulo: "Recheio e personalização", sub: "Deixe do seu jeito", tema: true,
     grupos: [
-      g("recheio", "Recheio", ["Ninho", "Doce de leite", "Coco"], { titulo: "Recheio", obrig: false }),
+      g("recheio", "Recheio", ["Ninho", "Doce de leite", "Coco", "Brigadeiro"], { titulo: "Recheio", obrig: false }),
       pers(),
     ],
   }),
@@ -174,7 +174,7 @@ const TIPOS = {
         tema: true,
         grupos: [
           g("massa", "Massa", ["Branca", "Red Velvet"], { titulo: "Sabor da massa" }),
-          g("recheio", "Recheio", ["Ninho", "Doce de leite", "Pudim"], { titulo: "Recheio(s)", multi: true, max: 2 }),
+          g("recheio", "Recheio", ["Ninho", "Doce de leite", "Pudim", "Brigadeiro"], { titulo: "Recheio(s)", multi: true, max: 2 }),
         ],
       },
     ],
