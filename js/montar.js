@@ -68,12 +68,12 @@ const TIPOS = {
       },
       {
         titulo: "Massa e recheio",
-        sub: "Recheios especiais somam R$ 20,00 ao bolo",
+        sub: "Cada recheio especial soma R$ 20,00 ao bolo",
         grupos: [
           g("massa", "Massa", ["Amanteigada", "Mista", ["Matilda (Chocolatuda)", undefined, { preco: 15 }]],
             { titulo: "Sabor da massa" }),
           g("recheio", "Recheio", RECHEIOS,
-            { titulo: "Recheio(s)", multi: true, max: 2, unico: true, nota: "especiais +R$ 20,00" }),
+            { titulo: "Recheio(s)", multi: true, max: 2, nota: "especiais +R$ 20,00 cada" }),
         ],
       },
       {
@@ -464,7 +464,7 @@ function renderFoto() {
   zona.appendChild(inp);
   box.appendChild(zona);
   if (foto) {
-    box.appendChild(el("p", "aviso", "Depois que o WhatsApp abrir, anexe esta mesma foto na conversa."));
+    box.appendChild(el("p", "aviso", "Ao enviar, escolha o WhatsApp e o contato da Micka: a foto vai junto com o pedido. Se não for possível, anexe esta foto na conversa."));
   }
   return box;
 }
@@ -542,7 +542,7 @@ function renderPasso(rolar = true) {
   if (rolar) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function enviar() {
+async function enviar() {
   let t = "Olá! Quero montar " + (tipo.pron === "sua" ? "uma" : "um") + " *" + tipo.nome + "* " + tipo.emoji + "\n\n";
   linhasResumo().slice(1).forEach((l) => {
     t += "*" + l.r + ":* " + l.txt + (l.preco ? " (" + l.preco + ")" : "") + "\n";
@@ -554,8 +554,18 @@ function enviar() {
   t += "\n*WhatsApp:* " + dados.whats;
   t += "\n*Data de retirada:* " + formatarData(dados.data);
   if (dados.obs.trim()) t += "\n*Observações:* " + dados.obs.trim();
+
+  if (foto && navigator.canShare && navigator.canShare({ files: [foto] })) {
+    try {
+      await navigator.share({ files: [foto], text: t });
+      return;
+    } catch (e) {
+      if (e.name === "AbortError") return; // a pessoa cancelou
+    }
+  }
+
   if (foto) t += "\n\n📷 Vou enviar a foto de referência aqui na conversa.";
-  window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t), "_blank");
+  window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
 }
 
 document.title = "Monte " + tipo.pron + " " + tipo.nome + " | Bolaria da Micka";
@@ -580,7 +590,7 @@ document.getElementById("topo-voltar").addEventListener("click", () => {
     passo--;
     renderPasso();
   } else {
-    window.location.href = "index.html#monte";
+    window.location.href = "index.html#personalize";
   }
 });
 
