@@ -548,5 +548,33 @@
         </div>
       </div>
     </section>
+
+    <script>
+      const tiposPorCategoria = {
+        bolos: "bolo",
+        brigadeiros: "brigadeiro",
+        "bem-vividos": "bemvivido",
+        cupcakes: "cupcake",
+        tortas: "torta",
+      };
+
+      document.querySelectorAll(".btn-encomendar").forEach((botao) => {
+        const categoria = botao.closest(".categoria");
+
+        if (!categoria) return;
+
+        const tipo = tiposPorCategoria[categoria.id];
+
+        if (!tipo) return;
+
+        const card = botao.closest(".card-bolo");
+        const nomeProduto = card?.querySelector("h3")?.textContent.trim();
+
+        botao.href =
+          "montar.html?tipo=" +
+          tipo +
+          (nomeProduto ? "&produto=" + encodeURIComponent(nomeProduto) : "");
+      });
+    </script>
   </body>
 </html>

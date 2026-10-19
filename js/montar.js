@@ -193,7 +193,7 @@ const sel = {};
 const qtds = {};
 const todos = () => tipo.passos.flatMap((p) => p.grupos);
 todos().forEach((gr) => { sel[gr.id] = []; qtds[gr.id] = 0; });
-const dados = { tema: "", nome: "", whats: "", data: "", obs: "" };
+const dados = { tema: params.get("produto") || "", nome: "", whats: "", data: "", obs: "" };
 const tela = document.getElementById("tela");
 
 const ach = (id) => {
