@@ -1,4 +1,4 @@
-const WHATSAPP = "5586999436390";
+const WHATSAPP = "5586999998679";
 const R = (n) => "R$ " + n.toFixed(2).replace(".", ",");
 
 const op = (lista) =>
