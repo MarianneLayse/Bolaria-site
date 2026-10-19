@@ -1,0 +1,157 @@
+.contato {
+  background-color: #fff0f5;
+  padding: 40px 6%;
+}
+
+.titulo-contato {
+  margin-bottom: 25px;
+}
+
+.titulo-contato h4 {
+  color: #d94f83;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 0 0 12px;
+}
+
+.titulo-contato h1 {
+  font-family: "Playfair Display", serif;
+  color: #641b35;
+  font-size: 27px;
+  margin: 0 0 12px;
+}
+
+.titulo-contato p {
+  color: #9b6b7c;
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.contatos {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contato-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contato-icone {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background-color: #ffd8e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contato-icone img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.contato-info p {
+  color: #b47b8f;
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+
+.contato-info span {
+  color: #7a2947;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .contato {
+    padding: 55px 8%;
+  }
+
+  .titulo-contato {
+    margin-bottom: 30px;
+  }
+
+  .titulo-contato h1 {
+    font-size: 32px;
+  }
+
+  .titulo-contato p {
+    font-size: 14px;
+    max-width: 450px;
+  }
+
+  .contatos {
+    gap: 22px;
+  }
+
+  .contato-item {
+    gap: 15px;
+  }
+
+  .contato-icone {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+
+  .contato-icone img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .contato-info p {
+    font-size: 12px;
+  }
+
+  .contato-info span {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contato {
+    padding: 65px 10%;
+  }
+
+  .titulo-contato h1 {
+    font-size: 36px;
+  }
+
+  .titulo-contato p {
+    max-width: 500px;
+  }
+
+  .contatos {
+    gap: 24px;
+  }
+
+  .contato-item {
+    gap: 16px;
+  }
+
+  .contato-icone {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+  }
+
+  .contato-icone img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .contato-info p {
+    font-size: 13px;
+  }
+
+  .contato-info span {
+    font-size: 14px;
+  }
+}
