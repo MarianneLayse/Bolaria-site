@@ -151,9 +151,15 @@ const TIPOS = {
         titulo: "Escolha o seu kit",
         sub: "Bolo com topo personalizado, 20 doces e 4 cupcakes",
         grupos: [g("kit", "Kit", [
+          ["Kit para 10 pessoas", "Baby mini com topo personalizado e 20 doces", { preco: 150 }],
+          ["Kit para 20 pessoas", "PP duo com topo personalizado e 20 doces", { preco: 190 }],
+          ["Kit para 40 pessoas", "P com topo personalizado e 30 doces", { preco: 250 }],
           ["Kit para 20 pessoas", "PP Duo com topo personalizado, 20 doces e 4 cupcakes", { preco: 210 }],
           ["Kit para 30 pessoas", "PP com topo personalizado, 20 doces e 4 cupcakes", { preco: 230 }],
           ["Kit para 40 pessoas", "P com topo personalizado, 20 doces e 4 cupcakes", { preco: 255 }],
+          ["Kit para 10 pessoas", "Baby mini com topo personalizado, 20 doces e 50 coxinhas", { preco: 190 }],
+          ["Kit para 20 pessoas", "PP duo com topo personalizado, 20 doces e 50 coxinhas", { preco: 225 }]
+
         ], { estilo: "cards", base: true })],
       },
       { titulo: "Detalhes do kit", sub: "Conte como quer o topo e os doces", tema: true, grupos: [] },
