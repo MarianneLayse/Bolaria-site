@@ -4,6 +4,7 @@
 @import url("personalize.css");
 @import url("avaliacoes.css");
 @import url("contato.css");
+@import url("rodape.css");
 
 * {
   box-sizing: border-box;

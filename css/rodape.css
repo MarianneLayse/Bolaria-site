@@ -1,0 +1,90 @@
+.rodape {
+  background-color: #fff0f5;
+  padding: 20px 15px;
+  text-align: center;
+  color: #b47b8f;
+}
+
+.rodape-marca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.rodape-marca img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  transform: scale(1.15);
+  clip-path: circle(40% at center);
+}
+
+.rodape-marca h2 {
+  font-family: "Playfair Display", serif;
+  color: #ec1685;
+  font-size: 16px;
+  margin: 0;
+}
+
+.rodape-descricao {
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 0 0 4px;
+}
+
+.rodape-copy {
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .rodape {
+    padding: 25px 20px;
+  }
+
+  .rodape-marca img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rodape-marca h2 {
+    font-size: 18px;
+  }
+
+  .rodape-descricao {
+    font-size: 12px;
+  }
+
+  .rodape-copy {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rodape {
+    padding: 28px 30px;
+  }
+
+  .rodape-marca img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .rodape-marca h2 {
+    font-size: 19px;
+  }
+
+  .rodape-descricao {
+    font-size: 13px;
+  }
+
+  .rodape-copy {
+    font-size: 12px;
+  }
+}
