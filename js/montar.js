@@ -193,7 +193,7 @@ const sel = {};
 const qtds = {};
 const todos = () => tipo.passos.flatMap((p) => p.grupos);
 todos().forEach((gr) => { sel[gr.id] = []; qtds[gr.id] = 0; });
-const dados = { tema: "", nome: "", whats: "", data: "", obs: "" };
+const dados = { tema: params.get("produto") || "", nome: "", whats: "", data: "", obs: "" };
 const tela = document.getElementById("tela");
 
 const ach = (id) => {
@@ -464,7 +464,7 @@ function renderFoto() {
   zona.appendChild(inp);
   box.appendChild(zona);
   if (foto) {
-    box.appendChild(el("p", "aviso", "Ao enviar, escolha o WhatsApp e o contato da Micka: a foto vai junto com o pedido. Se não for possível, anexe esta foto na conversa."));
+    box.appendChild(el("p", "aviso", "Depois que o WhatsApp abrir, anexe esta mesma foto na conversa."));
   }
   return box;
 }
@@ -542,7 +542,7 @@ function renderPasso(rolar = true) {
   if (rolar) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-async function enviar() {
+function enviar() {
   let t = "Olá! Quero montar " + (tipo.pron === "sua" ? "uma" : "um") + " *" + tipo.nome + "* " + tipo.emoji + "\n\n";
   linhasResumo().slice(1).forEach((l) => {
     t += "*" + l.r + ":* " + l.txt + (l.preco ? " (" + l.preco + ")" : "") + "\n";
@@ -554,16 +554,6 @@ async function enviar() {
   t += "\n*WhatsApp:* " + dados.whats;
   t += "\n*Data de retirada:* " + formatarData(dados.data);
   if (dados.obs.trim()) t += "\n*Observações:* " + dados.obs.trim();
-
-  if (foto && navigator.canShare && navigator.canShare({ files: [foto] })) {
-    try {
-      await navigator.share({ files: [foto], text: t });
-      return;
-    } catch (e) {
-      if (e.name === "AbortError") return; // a pessoa cancelou
-    }
-  }
-
   if (foto) t += "\n\n📷 Vou enviar a foto de referência aqui na conversa.";
   window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
 }
