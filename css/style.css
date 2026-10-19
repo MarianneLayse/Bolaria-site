@@ -2,6 +2,7 @@
 @import url("inicial.css");
 @import url("cardapio.css");
 @import url("personalize.css");
+@import url("avaliacoes.css");
 
 * {
   box-sizing: border-box;

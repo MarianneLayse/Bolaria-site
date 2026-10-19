@@ -1,0 +1,62 @@
+.avaliacoes {
+  background-color: pink;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.titulo-avaliacoes h4 {
+  margin: 0;
+  padding: 12px 0 0;
+  text-align: center;
+  justify-content: center;
+  color: #ff2d8d;
+}
+
+.titulo-avaliacoes h1 {
+  font-family: "Parisienne", cursive;
+  color: #7a3550;
+  font-size: 35px;
+  margin: 8px 0 0;
+  text-align: center;
+}
+
+.lista-avaliacoes {
+  margin: 0 auto;
+  padding: 0 15px;
+  width: 100%;
+}
+
+.star {
+  color: #ffd700;
+  font-size: 25px;
+}
+
+.avaliacao-card {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  color: #7a3550;
+  font-size: 15px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.conteudo {
+  width: 90%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.cliente {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cliente img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
