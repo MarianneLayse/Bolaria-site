@@ -142,7 +142,7 @@ const TIPOS = {
     nome: "Docinhos", pron: "seus", emoji: "🍫",
     passos: [
       {
-        titulo: "Qual pacote você quer?",
+        titulo: "Qual pacote você deseja?",
         sub: "Tradicionais ou especiais, em 50 ou 100 unidades",
         grupos: [
           g("pacote", "Pacote", [
