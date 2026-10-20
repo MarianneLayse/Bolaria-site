@@ -79,7 +79,7 @@ const recheioBolo = () =>
     max: () => {
       const t = ach("tamanho");
       const k = ach("kit");
-      return t && t.umRecheio ? 1 : 2;
+      return (t && t.umRecheio) || (k && k.umRecheio) ? 1 : 2;
     },
     nota: "especiais +R$ 20,00 cada"
   });
