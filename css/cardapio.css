@@ -134,6 +134,8 @@
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-bolo img {
@@ -157,6 +159,9 @@
 
 .conteudo-card {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .conteudo-card h3 {
@@ -167,13 +172,14 @@
 .conteudo-card p {
   margin: 0;
   font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
 }
 
 .btn-encomendar {
   display: block;
   text-align: center;
   padding: 12px;
-  margin-top: 15px;
+  margin-top: auto;
   border: 1px solid #ff2d8d;
   border-radius: 25px;
   text-decoration: none;
