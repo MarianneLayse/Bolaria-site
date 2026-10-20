@@ -217,6 +217,7 @@ const TIPOS = {
             ["Kit para 20 pessoas", "PP Duo com topo personalizado, 20 doces e 4 cupcakes", { preco: 210, umRecheio: true }],
             ["Kit para 30 pessoas", "PP com topo personalizado, 20 doces e 4 cupcakes", { preco: 230 }],
             ["Kit para 40 pessoas", "P com topo personalizado, 20 doces e 4 cupcakes", { preco: 255 }],
+            ["Kit para 60 pessoas", "M com topo personalizado, 50 doces e 4 cupcakes", { preco: 350, umRecheio: true }],
             ["Kit para 10 pessoas", "Baby mini com topo personalizado, 20 doces e 50 coxinhas", { preco: 190, umRecheio: true }],
             ["Kit para 20 pessoas", "PP duo com topo personalizado, 20 doces e 50 coxinhas", { preco: 225, umRecheio: true }],
           ], { estilo: "cards", base: true })
@@ -254,7 +255,7 @@ const TIPOS = {
         titulo: "Qual tamanho você precisa?",
         sub: "O valor da torta é combinado com a Micka",
         grupos: [
-          g("tamanho", "Tamanho", ["Pequena", "Média", "Grande"], {
+          g("tamanho", "Tamanho", [["Pequena","(20 fatias)"],["Média","(40 fatias)"]], {
             titulo: "Tamanho"
           })
         ],
@@ -514,12 +515,26 @@ function renderGrupo(gr) {
     if (cards) {
       const t = el("div");
       t.appendChild(el("strong", "", o.nome));
+
       if (o.desc) t.appendChild(el("small", "", o.desc));
+
       b.appendChild(t);
+
       if (preco) b.appendChild(el("span", "preco", preco));
     } else {
-      b.textContent = o.nome;
+      b.textContent = "";
+
+      if (gr.id === "tamanho" && o.desc) {
+        const t = el("div", "tamanho-opcao");
+        t.appendChild(el("strong", "", o.nome));
+        t.appendChild(el("small", "", o.desc));
+        b.appendChild(t);
+      } else {
+        b.appendChild(el("span", "", o.nome));
+      }
+
       if (preco) b.appendChild(el("span", "chip-preco", preco));
+
       b.disabled = gr.multi && !ativa && sel[gr.id].length >= maxDe(gr);
     }
 
@@ -530,6 +545,7 @@ function renderGrupo(gr) {
   box.appendChild(lista);
   return box;
 }
+
 
 function renderQtd(gr) {
   const box = el("section", "grupo");
