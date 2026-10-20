@@ -217,6 +217,7 @@ const TIPOS = {
             ["Kit para 20 pessoas", "PP Duo com topo personalizado, 20 doces e 4 cupcakes", { preco: 210, umRecheio: true }],
             ["Kit para 30 pessoas", "PP com topo personalizado, 20 doces e 4 cupcakes", { preco: 230 }],
             ["Kit para 40 pessoas", "P com topo personalizado, 20 doces e 4 cupcakes", { preco: 255 }],
+            ["Kit para 60 pessoas", "M com topo personalizado, 50 doces e 4 cupcakes", { preco: 350, umRecheio: true }],
             ["Kit para 10 pessoas", "Baby mini com topo personalizado, 20 doces e 50 coxinhas", { preco: 190, umRecheio: true }],
             ["Kit para 20 pessoas", "PP duo com topo personalizado, 20 doces e 50 coxinhas", { preco: 225, umRecheio: true }],
           ], { estilo: "cards", base: true })
