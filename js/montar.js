@@ -92,10 +92,10 @@ const TIPOS = {
         sub: "Preço do bolo sem topo. O topo você escolhe mais adiante",
         grupos: [
           g("tamanho", "Tamanho", [
-            ["Baby Mini (15cm)", "10 fatias", { preco: 100, topo: 20 }],
-            ["Mini Trad. (15cm)", "15 fatias", { preco: 125, topo: 20 }],
+            ["Baby Mini (15cm)", "10 fatias", { preco: 100, topo: 20, umRecheio: true }],
+            ["Mini Trad. (15cm)", "15 fatias", { preco: 125, topo: 20, umRecheio: true }],
             ["PP Duo (18cm)", "20 fatias", { preco: 135, topo: 20, umRecheio: true }],
-            ["PP Trad. (18cm)", "30 fatias", { preco: 150, topo: 25, umRecheio: true }],
+            ["PP Trad. (18cm)", "30 fatias", { preco: 150, topo: 25,}],
             ["P Trad. (22cm)", "40 fatias", { preco: 170, topo: 30 }],
             ["M Trad. (26cm)", "50 fatias", { preco: 220, topo: 30 }],
             ["G Trad. (30cm) · Novo", "70 fatias", { preco: 380, topo: 50 }],
@@ -104,7 +104,7 @@ const TIPOS = {
       },
       {
         titulo: "Massa e recheio",
-        sub: "Cada recheio especial soma R$ 20,00 ao bolo. Nos bolos PP, escolha 1 recheio",
+        sub: "Cada recheio especial soma R$ 20,00 ao bolo. Nos bolos Baby Mini, Mini Trad. e PP Duo, escolha 1 recheio",
         grupos: [massaBolo(), recheioBolo()],
       },
       {
@@ -200,7 +200,7 @@ const TIPOS = {
     sub: "Opcional",
     tema: true,
     grupos: [pers()],
-  }),
+  }, 10),
 
   kit: {
     nome: "Kit Festa", pron: "seu", emoji: "🎉",
@@ -210,29 +210,30 @@ const TIPOS = {
         sub: "Bolo com topo personalizado e doces para a sua festa",
         grupos: [
           g("kit", "Kit", [
-            ["Kit para 10 pessoas", "Baby mini com topo personalizado e 20 doces", { preco: 150 }],
-            ["Kit para 20 pessoas", "PP duo com topo personalizado e 20 doces", { preco: 190 }],
+            ["Kit para 10 pessoas", "Baby mini com topo personalizado e 20 doces", { preco: 150, umRecheio: true }],
+            ["Kit para 20 pessoas", "PP duo com topo personalizado e 20 doces", { preco: 190, umRecheio: true }],
             ["Kit para 40 pessoas", "P com topo personalizado e 30 doces", { preco: 250 }],
-            ["Kit para 20 pessoas", "PP Duo com topo personalizado, 20 doces e 4 cupcakes", { preco: 210 }],
+            ["Kit para 20 pessoas", "PP Duo com topo personalizado, 20 doces e 4 cupcakes", { preco: 210, umRecheio: true }],
             ["Kit para 30 pessoas", "PP com topo personalizado, 20 doces e 4 cupcakes", { preco: 230 }],
             ["Kit para 40 pessoas", "P com topo personalizado, 20 doces e 4 cupcakes", { preco: 255 }],
-            ["Kit para 10 pessoas", "Baby mini com topo personalizado, 20 doces e 50 coxinhas", { preco: 190 }],
-            ["Kit para 20 pessoas", "PP duo com topo personalizado, 20 doces e 50 coxinhas", { preco: 225 }],
+            ["Kit para 10 pessoas", "Baby mini com topo personalizado, 20 doces e 50 coxinhas", { preco: 190, umRecheio: true }],
+            ["Kit para 20 pessoas", "PP duo com topo personalizado, 20 doces e 50 coxinhas", { preco: 225, umRecheio: true }],
           ], { estilo: "cards", base: true })
         ],
       },
       {
         titulo: "Massa e recheio do bolo",
-        sub: "Cada recheio especial soma R$ 20,00 ao kit",
         grupos: [massaBolo(), recheioBolo()],
       },
       {
         titulo: "Tipo de brigadeiro",
-        sub: "Escolha até 2 sabores para os doces do kit",
+        sub: "Escolha 1 sabor para os doces do kit",
         grupos: [
-          g("brigadeiro", "Brigadeiro", TRAD, {
-            titulo: "Sabor do brigadeiro", multi: true, max: 2, min: 1,
-            nota: "até 2 sabores"
+          g("brigadeiro", "Brigadeiro", [
+            "Coco","Chocolate","Ninho"
+          ], {
+            titulo: "Sabor do brigadeiro", multi: false, max: 1, min: 1,
+            nota: "escolha apenas 1 sabor"
           }),
         ],
       },
