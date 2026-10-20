@@ -1,4 +1,3 @@
-
 const WHATSAPP = "5586999998679";
 const R = (n) => "R$ " + n.toFixed(2).replace(".", ",");
 
@@ -22,14 +21,16 @@ const pers = () =>
     [["Adesivo ou tag personalizado", "R$ 1,00 por unidade", { porUnid: 1 }]],
     { estilo: "cards", obrig: false, titulo: "Personalização" });
 
-const unitario = (nome, pron, emoji, unit, ultimo) => ({
+const unitario = (nome, pron, emoji, unit, ultimo, minimo = 1) => ({
   nome, pron, emoji,
   passos: [
     {
       titulo: "Quantas unidades?",
-      sub: "Digite a quantidade que você precisa",
+      sub: minimo > 1
+        ? "Pedido mínimo de " + minimo + " unidades"
+        : "Digite a quantidade que você precisa",
       grupos: [g("qtd", "Quantidade", [], {
-        estilo: "qtd", unit, min: 1, titulo: "Quantidade"
+        estilo: "qtd", unit, min: minimo, titulo: "Quantidade"
       })],
     },
     ultimo,
@@ -66,6 +67,22 @@ const RECHEIOS = [
   ].map((n) => [n, undefined, { preco: 20 }]),
 ];
 
+const massaBolo = () =>
+  g("massa", "Massa", [
+    "Amanteigada", "Mista",
+    ["Matilda (Chocolatuda)", undefined, { preco: 15 }]
+  ], { titulo: "Sabor da massa" });
+
+const recheioBolo = () =>
+  g("recheio", "Recheio", RECHEIOS, {
+    titulo: "Recheio(s)", multi: true,
+    max: () => {
+      const t = ach("tamanho");
+      return t && t.umRecheio ? 1 : 2;
+    },
+    nota: "especiais +R$ 20,00 cada"
+  });
+
 const TIPOS = {
   bolo: {
     nome: "Bolo", pron: "seu", emoji: "🎂",
@@ -77,8 +94,8 @@ const TIPOS = {
           g("tamanho", "Tamanho", [
             ["Baby Mini (15cm)", "10 fatias", { preco: 100, topo: 20 }],
             ["Mini Trad. (15cm)", "15 fatias", { preco: 125, topo: 20 }],
-            ["PP Duo (18cm)", "20 fatias", { preco: 135, topo: 20 }],
-            ["PP Trad. (18cm)", "30 fatias", { preco: 150, topo: 25 }],
+            ["PP Duo (18cm)", "20 fatias", { preco: 135, topo: 20, umRecheio: true }],
+            ["PP Trad. (18cm)", "30 fatias", { preco: 150, topo: 25, umRecheio: true }],
             ["P Trad. (22cm)", "40 fatias", { preco: 170, topo: 30 }],
             ["M Trad. (26cm)", "50 fatias", { preco: 220, topo: 30 }],
             ["G Trad. (30cm) · Novo", "70 fatias", { preco: 380, topo: 50 }],
@@ -87,17 +104,8 @@ const TIPOS = {
       },
       {
         titulo: "Massa e recheio",
-        sub: "Cada recheio especial soma R$ 20,00 ao bolo",
-        grupos: [
-          g("massa", "Massa", [
-            "Amanteigada", "Mista",
-            ["Matilda (Chocolatuda)", undefined, { preco: 15 }]
-          ], { titulo: "Sabor da massa" }),
-          g("recheio", "Recheio", RECHEIOS, {
-            titulo: "Recheio(s)", multi: true, max: 2,
-            nota: "especiais +R$ 20,00 cada"
-          }),
-        ],
+        sub: "Cada recheio especial soma R$ 20,00 ao bolo. Nos bolos PP, escolha 1 recheio",
+        grupos: [massaBolo(), recheioBolo()],
       },
       {
         titulo: "Topo e decoração",
@@ -173,7 +181,7 @@ const TIPOS = {
       }),
       pers(),
     ],
-  }),
+  }, 12),
 
   cupcake: unitario("Cupcake", "seu", "🧁", 6, {
     titulo: "Recheio e personalização",
@@ -185,7 +193,7 @@ const TIPOS = {
       ], { titulo: "Recheio", obrig: false }),
       pers(),
     ],
-  }),
+  }, 6),
 
   pirulito: unitario("Pirulito ao Leite", "seu", "🍭", 5, {
     titulo: "Personalização",
@@ -199,7 +207,7 @@ const TIPOS = {
     passos: [
       {
         titulo: "Escolha o seu kit",
-        sub: "Bolo com topo personalizado, 20 doces e 4 cupcakes",
+        sub: "Bolo com topo personalizado e doces para a sua festa",
         grupos: [
           g("kit", "Kit", [
             ["Kit para 10 pessoas", "Baby mini com topo personalizado e 20 doces", { preco: 150 }],
@@ -211,6 +219,21 @@ const TIPOS = {
             ["Kit para 10 pessoas", "Baby mini com topo personalizado, 20 doces e 50 coxinhas", { preco: 190 }],
             ["Kit para 20 pessoas", "PP duo com topo personalizado, 20 doces e 50 coxinhas", { preco: 225 }],
           ], { estilo: "cards", base: true })
+        ],
+      },
+      {
+        titulo: "Massa e recheio do bolo",
+        sub: "Cada recheio especial soma R$ 20,00 ao kit",
+        grupos: [massaBolo(), recheioBolo()],
+      },
+      {
+        titulo: "Tipo de brigadeiro",
+        sub: "Escolha até 2 sabores para os doces do kit",
+        grupos: [
+          g("brigadeiro", "Brigadeiro", TRAD, {
+            titulo: "Sabor do brigadeiro", multi: true, max: 2, min: 1,
+            nota: "até 2 sabores"
+          }),
         ],
       },
       {
@@ -298,6 +321,8 @@ const visivel = (gr) =>
   !gr.quando || (ach(gr.quando[0]) || {}).nome === gr.quando[1];
 
 const grupos = () => todos().filter(visivel);
+
+const maxDe = (gr) => (typeof gr.max === "function" ? gr.max() : gr.max);
 
 function precoGrupo(gr) {
   if (gr.estilo === "qtd") {
@@ -399,7 +424,7 @@ function escolher(gr, nome, id) {
     sel[gr.id] = i >= 0 ? [] : [chave];
   } else if (i >= 0) {
     lista.splice(i, 1);
-  } else if (lista.length < gr.max) {
+  } else if (lista.length < maxDe(gr)) {
     lista.push(chave);
   }
 
@@ -463,7 +488,7 @@ function renderGrupo(gr) {
     const h = el("h3", "", gr.titulo + " ");
     const dica = gr.dica ||
       (gr.multi
-        ? "(" + sel[gr.id].length + " selecionados" +
+        ? "(" + sel[gr.id].length + " de " + maxDe(gr) + " selecionados" +
           (gr.nota ? " · " + gr.nota : "") + ")"
         : "");
 
@@ -493,7 +518,7 @@ function renderGrupo(gr) {
     } else {
       b.textContent = o.nome;
       if (preco) b.appendChild(el("span", "chip-preco", preco));
-      b.disabled = gr.multi && !ativa && sel[gr.id].length >= gr.max;
+      b.disabled = gr.multi && !ativa && sel[gr.id].length >= maxDe(gr);
     }
 
     b.addEventListener("click", () => escolher(gr, o.nome, o.id));
@@ -528,11 +553,18 @@ function renderQtd(gr) {
 
   const atual = () => {
     const n = qtds[gr.id];
-    info.textContent = n > 0
-      ? n + " × " + R(gr.unit) + " = " + R(n * gr.unit)
-      : R(gr.unit) + " cada";
+    const mn = gr.min || 0;
 
-    menos.disabled = n <= 0;
+    if (n > 0 && n < mn) {
+      info.textContent = "Pedido mínimo de " + mn + " unidades";
+    } else if (n > 0) {
+      info.textContent = n + " × " + R(gr.unit) + " = " + R(n * gr.unit);
+    } else {
+      info.textContent = R(gr.unit) + " cada" +
+        (mn > 1 ? " · mínimo de " + mn + " unidades" : "");
+    }
+
+    menos.disabled = n <= mn;
   };
 
   const mudar = (n) => {
@@ -551,7 +583,9 @@ function renderQtd(gr) {
   });
 
   menos.addEventListener("click", () => mudar(qtds[gr.id] - 1));
-  mais.addEventListener("click", () => mudar(qtds[gr.id] + 1));
+  mais.addEventListener("click", () =>
+    mudar(qtds[gr.id] < (gr.min || 0) ? gr.min : qtds[gr.id] + 1)
+  );
 
   linha.append(menos, inp, mais);
   box.append(linha, info);
@@ -749,7 +783,17 @@ function atualizarBotoes() {
     (t.v > 0 || t.c ? " · Total: " + textoTotal(t) : "");
 }
 
+function ajustar() {
+  todos().forEach((gr) => {
+    const m = maxDe(gr);
+    if (gr.multi && sel[gr.id].length > m) {
+      sel[gr.id] = sel[gr.id].slice(0, m);
+    }
+  });
+}
+
 function renderPasso(rolar = true) {
+  ajustar();
   renderTopo();
   tela.replaceChildren();
 
