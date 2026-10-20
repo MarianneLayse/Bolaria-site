@@ -416,7 +416,7 @@ function linhasResumo() {
       ? (qtds[gr.id] > 0 ? qtds[gr.id] + " unid." : "")
       : gr.opcoes
           .filter((o) => sel[gr.id].includes(o.id))
-          .map((o) => o.nome)
+          .map((o) => o.nome + (gr.id === "kit" && o.desc ? " (" + o.desc + ")" : ""))
           .join(" + ");
 
     if (!txt) return;
