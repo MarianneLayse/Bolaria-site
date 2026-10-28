@@ -280,27 +280,18 @@ const TIPOS = {
 };
 
 const params = new URLSearchParams(window.location.search);
-const chave = TIPOS[params.get("tipo")] ? params.get("tipo") : "bolo";
-const tipo = TIPOS[chave];
-const total_passos = tipo.passos.length + 1;
+const chaveInicial = TIPOS[params.get("tipo")] ? params.get("tipo") : "bolo";
 
+let chave, tipo, sel, qtds;
 let passo = 0;
+let modo = "item"; // "item" | "escolher" | "final"
+const carrinho = [];
 let foto = null;
 let fotoUrl = "";
 
-const sel = {};
-const qtds = {};
 const todos = () => tipo.passos.flatMap((p) => p.grupos);
 
-todos().forEach((gr) => {
-  sel[gr.id] = [];
-  qtds[gr.id] = 0;
-});
-
-const dados = {
-  tema: params.get("produto") || "",
-  nome: "", whats: "", data: "", obs: ""
-};
+const dados = { tema: "", nome: "", whats: "", data: "", obs: "" };
 
 const tela = document.getElementById("tela");
 
@@ -308,6 +299,44 @@ const ach = (id) => {
   const gr = todos().find((x) => x.id === id);
   return gr && gr.opcoes.find((o) => sel[id].includes(o.id));
 };
+
+function iniciarItem(c, tema = "") {
+  chave = c;
+  tipo = TIPOS[c];
+  sel = {};
+  qtds = {};
+  todos().forEach((gr) => { sel[gr.id] = []; qtds[gr.id] = 0; });
+  dados.tema = tema;
+  passo = 0;
+  modo = "item";
+}
+
+function carregar(s) {
+  chave = s.chave;
+  tipo = TIPOS[s.chave];
+  sel = JSON.parse(JSON.stringify(s.sel));
+  qtds = { ...s.qtds };
+  dados.tema = s.tema;
+}
+
+function fotografar() {
+  return {
+    chave, tema: dados.tema,
+    sel: JSON.parse(JSON.stringify(sel)), qtds: { ...qtds },
+    emoji: tipo.emoji, nome: tipo.nome, pron: tipo.pron,
+    linhas: linhasResumo().slice(1),
+    total: total(),
+  };
+}
+
+function totalGeral(incluirAtual) {
+  const lista = carrinho.map((i) => i.total);
+  if (incluirAtual) lista.push(total());
+  return {
+    v: lista.reduce((a, t) => a + t.v, 0),
+    c: lista.some((t) => t.c),
+  };
+}
 
 const unidades = () => {
   const a = ach("pacote");
@@ -407,11 +436,13 @@ function grupoOk(gr) {
 }
 
 function valido() {
-  if (passo < tipo.passos.length) {
+  if (modo === "item") {
     return tipo.passos[passo].grupos.filter(visivel).every(grupoOk);
   }
 
   return (
+    modo === "final" &&
+    carrinho.length > 0 &&
     dados.nome.trim().length > 1 &&
     dados.whats.replace(/\D/g, "").length >= 10 &&
     dados.data !== ""
@@ -545,7 +576,6 @@ function renderGrupo(gr) {
   box.appendChild(lista);
   return box;
 }
-
 
 function renderQtd(gr) {
   const box = el("section", "grupo");
@@ -692,11 +722,99 @@ function renderFoto() {
   return box;
 }
 
-function renderFinal() {
-  tela.appendChild(el("h1", "", "Finalizando seu pedido"));
+function renderEscolher() {
   tela.appendChild(
-    el("p", "sub", "Adicione seus dados e uma foto de referência se tiver")
+    el("h1", "", carrinho.length ? "Adicionar outro item" : "O que você quer pedir?")
   );
+  tela.appendChild(el("p", "sub", "Escolha o que mais entra no seu pedido"));
+
+  const lista = el("div", "cards");
+
+  Object.entries(TIPOS).forEach(([k, t]) => {
+    const b = el("button", "opcao-card");
+    b.type = "button";
+
+    const d = el("div");
+    d.appendChild(el("strong", "", t.emoji + " " + t.nome));
+    b.appendChild(d);
+
+    b.addEventListener("click", () => {
+      iniciarItem(k);
+      renderPasso();
+    });
+
+    lista.appendChild(b);
+  });
+
+  tela.appendChild(lista);
+}
+
+function removerItem(i) {
+  carrinho.splice(i, 1);
+  if (!carrinho.length) modo = "escolher";
+  renderPasso();
+}
+
+function renderFinal() {
+  tela.appendChild(el("h1", "", "Seu pedido"));
+  tela.appendChild(
+    el("p", "sub", "Confira os itens, adicione outro se quiser e preencha seus dados")
+  );
+
+  carrinho.forEach((it, idx) => {
+    const box = el("section", "resumo");
+
+    const topo = el("div", "item-topo");
+    topo.appendChild(el("h3", "", it.emoji + " " + it.nome));
+
+    const rm = el("button", "remover", "Remover");
+    rm.type = "button";
+    rm.addEventListener("click", () => removerItem(idx));
+    topo.appendChild(rm);
+    box.appendChild(topo);
+
+    it.linhas.forEach((l) => {
+      const linha = el("div", "linha-resumo");
+      linha.appendChild(el("span", "", l.r));
+
+      const dir = el("div", "dir");
+      dir.appendChild(el("strong", "", l.txt));
+      if (l.preco) dir.appendChild(el("em", "", l.preco));
+
+      linha.appendChild(dir);
+      box.appendChild(linha);
+    });
+
+    if (it.total.v > 0 || it.total.c) {
+      const st = el("div", "linha-resumo");
+      st.appendChild(el("span", "", "Subtotal"));
+
+      const dir = el("div", "dir");
+      dir.appendChild(el("strong", "", textoTotal(it.total)));
+      st.appendChild(dir);
+
+      box.appendChild(st);
+    }
+
+    tela.appendChild(box);
+  });
+
+  const wrap = el("div", "cards");
+  const add = el("button", "opcao-card");
+  add.type = "button";
+
+  const d = el("div");
+  d.appendChild(el("strong", "", "➕ Adicionar outro item"));
+  d.appendChild(el("small", "", "Ex: um bolo e também cupcakes"));
+  add.appendChild(d);
+
+  add.addEventListener("click", () => {
+    modo = "escolher";
+    renderPasso();
+  });
+
+  wrap.appendChild(add);
+  tela.appendChild(wrap);
 
   tela.appendChild(
     campo("Seu nome *", "", "input",
@@ -727,49 +845,46 @@ function renderFinal() {
       "obs")
   );
 
-  const resumo = el("section", "resumo");
-  resumo.appendChild(el("h3", "", "Resumo do pedido"));
+  const tg = totalGeral(false);
+  const fim = el("section", "resumo");
+  fim.appendChild(el("h3", "", "Total do pedido"));
 
-  linhasResumo().forEach((l) => {
-    const linha = el("div", "linha-resumo");
-    linha.appendChild(el("span", "", l.r));
-
-    const dir = el("div", "dir");
-    dir.appendChild(el("strong", "", l.txt));
-    if (l.preco) dir.appendChild(el("em", "", l.preco));
-
-    linha.appendChild(dir);
-    resumo.appendChild(linha);
-  });
-
-  const t = total();
   const tot = el("div", "total");
   tot.appendChild(el("span", "", "Total estimado"));
-  tot.appendChild(el("strong", "", textoTotal(t)));
-  resumo.appendChild(tot);
+  tot.appendChild(el("strong", "", textoTotal(tg)));
+  fim.appendChild(tot);
 
-  if (!t.c && t.v > 0) {
+  if (!tg.c && tg.v > 0) {
     const ent = el("div", "entrada");
     ent.appendChild(el("span", "", "Entrada de 50% no ato da encomenda"));
-    ent.appendChild(el("span", "", R(t.v / 2)));
-    resumo.appendChild(ent);
+    ent.appendChild(el("span", "", R(tg.v / 2)));
+    fim.appendChild(ent);
   }
 
-  resumo.appendChild(
+  fim.appendChild(
     el("p", "nota", "Valor estimado, sujeito a confirmação pela Micka. Aceitamos PIX e cartão de crédito (com acréscimo).")
   );
 
-  tela.appendChild(resumo);
+  tela.appendChild(fim);
 }
 
 function renderTopo() {
-  document.getElementById("contador").textContent =
-    tipo.emoji + " " + (passo + 1) + "/" + total_passos;
-
+  const cont = document.getElementById("contador");
   const ol = document.getElementById("passos");
   ol.replaceChildren();
 
-  for (let i = 0; i < total_passos; i++) {
+  if (modo !== "item") {
+    const n = carrinho.length;
+    cont.textContent = modo === "final"
+      ? "🛒 " + n + (n === 1 ? " item" : " itens")
+      : "➕ Novo item";
+    return;
+  }
+
+  const n = tipo.passos.length;
+  cont.textContent = tipo.emoji + " " + (passo + 1) + "/" + n;
+
+  for (let i = 0; i < n; i++) {
     if (i > 0) {
       ol.appendChild(el("li", "linha" + (i <= passo ? " feita" : "")));
     }
@@ -784,21 +899,45 @@ function renderTopo() {
   }
 }
 
+function cabecalho() {
+  const e = document.getElementById("emoji-tipo");
+  const t = document.getElementById("titulo-tipo");
+
+  if (modo === "item") {
+    e.textContent = tipo.emoji;
+    t.textContent = "Monte " + tipo.pron + " " + tipo.nome;
+    document.title = "Monte " + tipo.pron + " " + tipo.nome + " | Bolaria da Micka";
+  } else {
+    e.textContent = "🛒";
+    t.textContent = modo === "final" ? "Seu pedido" : "Adicionar item";
+  }
+}
+
 function atualizarBotoes() {
   const prox = document.getElementById("prox");
-  document.getElementById("voltar").hidden = passo === 0;
+  const noItem = modo === "item";
 
-  prox.textContent = passo === total_passos - 1
+  document.getElementById("voltar").hidden =
+    modo === "escolher" || (noItem && passo === 0 && carrinho.length === 0);
+
+  prox.hidden = modo === "escolher";
+
+  prox.textContent = modo === "final"
     ? "💬 Enviar pedido pelo WhatsApp"
-    : "Próximo ›";
+    : passo === tipo.passos.length - 1 ? "Revisar pedido ›" : "Próximo ›";
 
   prox.disabled = !valido();
 
-  const t = total();
+  const n = carrinho.length;
+  const t = totalGeral(noItem);
+
+  const base = noItem
+    ? tipo.emoji + " Você está montando: " + tipo.nome +
+      (n ? " · já no pedido: " + n : "")
+    : "🛒 " + n + (n === 1 ? " item" : " itens") + " no pedido";
 
   document.getElementById("rodape").textContent =
-    tipo.emoji + " Você está montando: " + tipo.nome +
-    (t.v > 0 || t.c ? " · Total: " + textoTotal(t) : "");
+    base + (t.v > 0 || t.c ? " · Total: " + textoTotal(t) : "");
 }
 
 function ajustar() {
@@ -813,13 +952,12 @@ function ajustar() {
 function renderPasso(rolar = true) {
   ajustar();
   renderTopo();
+  cabecalho();
   tela.replaceChildren();
 
-  if (passo < tipo.passos.length) {
-    renderEscolhas(tipo.passos[passo]);
-  } else {
-    renderFinal();
-  }
+  if (modo === "item") renderEscolhas(tipo.passos[passo]);
+  else if (modo === "escolher") renderEscolher();
+  else renderFinal();
 
   atualizarBotoes();
 
@@ -827,16 +965,30 @@ function renderPasso(rolar = true) {
 }
 
 function enviar() {
-  let t = "Olá! Quero montar " +
-    (tipo.pron === "sua" ? "uma" : "um") +
-    " *" + tipo.nome + "* " + tipo.emoji + "\n\n";
+  const linha = (l) =>
+    "*" + l.r + ":* " + l.txt + (l.preco ? " (" + l.preco + ")" : "") + "\n";
 
-  linhasResumo().slice(1).forEach((l) => {
-    t += "*" + l.r + ":* " + l.txt +
-      (l.preco ? " (" + l.preco + ")" : "") + "\n";
-  });
+  let t;
 
-  const tt = total();
+  if (carrinho.length === 1) {
+    const it = carrinho[0];
+    t = "Olá! Quero montar " + (it.pron === "sua" ? "uma" : "um") +
+      " *" + it.nome + "* " + it.emoji + "\n\n";
+    it.linhas.forEach((l) => (t += linha(l)));
+  } else {
+    t = "Olá! Quero fazer um pedido com *" + carrinho.length + " itens*:\n";
+
+    carrinho.forEach((it, n) => {
+      t += "\n*" + (n + 1) + ") " + it.emoji + " " + it.nome + "*\n";
+      it.linhas.forEach((l) => (t += linha(l)));
+
+      if (it.total.v > 0 || it.total.c) {
+        t += "_Subtotal: " + textoTotal(it.total) + "_\n";
+      }
+    });
+  }
+
+  const tt = totalGeral(false);
 
   t += "\n*Total estimado:* " + textoTotal(tt);
 
@@ -860,36 +1012,42 @@ function enviar() {
     "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(t);
 }
 
-document.title = "Monte " + tipo.pron + " " + tipo.nome +
-  " | Bolaria da Micka";
+function voltar() {
+  if (modo === "final") {
+    // reabre o último item para editar
+    carregar(carrinho.pop());
+    passo = tipo.passos.length - 1;
+    modo = "item";
+  } else if (modo === "escolher" || (modo === "item" && passo === 0)) {
+    if (!carrinho.length) {
+      window.location.href = "index.html#personalize";
+      return;
+    }
+    modo = "final";
+  } else {
+    passo--;
+  }
 
-document.getElementById("emoji-tipo").textContent = tipo.emoji;
-document.getElementById("titulo-tipo").textContent =
-  "Monte " + tipo.pron + " " + tipo.nome;
+  renderPasso();
+}
 
 document.getElementById("prox").addEventListener("click", () => {
   if (!valido()) return;
 
-  if (passo < total_passos - 1) {
-    passo++;
-    renderPasso();
-  } else {
-    enviar();
-  }
-});
+  if (modo === "final") return enviar();
 
-document.getElementById("voltar").addEventListener("click", () => {
-  passo--;
+  if (passo < tipo.passos.length - 1) {
+    passo++;
+  } else {
+    carrinho.push(fotografar());
+    modo = "final";
+  }
+
   renderPasso();
 });
 
-document.getElementById("topo-voltar").addEventListener("click", () => {
-  if (passo > 0) {
-    passo--;
-    renderPasso();
-  } else {
-    window.location.href = "index.html#personalize";
-  }
-});
+document.getElementById("voltar").addEventListener("click", voltar);
+document.getElementById("topo-voltar").addEventListener("click", voltar);
 
+iniciarItem(chaveInicial, params.get("produto") || "");
 renderPasso(false);
