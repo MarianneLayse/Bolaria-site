@@ -54,8 +54,8 @@ const P_E100 = "Especiais · 100 unidades";
 
 const sabores = (id, lista, n, pacote) =>
   g(id, "Sabores", lista, {
-    titulo: "Escolha " + n + (n === 1 ? " sabor" : " sabores"),
-    multi: true, max: n, min: n, quando: ["pacote", pacote],
+    titulo: n===1 ? "Escolha 1 sabor" : "Escolha até " + n + " sabores",
+    multi: true, max: n, min: 1, quando: ["pacote", pacote],
   });
 
 const RECHEIOS = [
